@@ -1,0 +1,6 @@
+bin/
+*.obj
+*.exe
+*.pdb
+*.exp
+*.def
