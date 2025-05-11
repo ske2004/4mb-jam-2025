@@ -4,3 +4,5 @@ bin/
 *.pdb
 *.exp
 *.def
+*.ipdb
+*.o

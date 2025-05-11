@@ -19,8 +19,8 @@ EXIT /B 1
 :MAIN
 IF NOT EXIST bin MKDIR bin
 ECHO ^>Bob the builder, can we build it?
-cl main.c /O2 /c /GS- || EXIT /B
-crinkler main.obj user32.lib kernel32.lib gdi32.lib dsound.lib dxguid.lib /SUBSYSTEM:WINDOWS /NODEFAULTLIB /out:bin\demo.exe || EXIT /B
+cl /ISource Source\_TU\_TU.cpp /O2 /c /GS- || EXIT /B
+crinkler d3d9.lib _TU.obj user32.lib kernel32.lib gdi32.lib dsound.lib /SUBSYSTEM:WINDOWS /NODEFAULTLIB /out:bin\demo.exe || EXIT /B
 DEL *.obj
 ECHO ^>Bob the builder, yes we can! (Tutututu)
 GOTO :EOF
