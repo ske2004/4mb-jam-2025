@@ -1,6 +1,8 @@
 #include <d3d9.h>
 #include "Basics/Std.hpp"
 
+#define VERTEX_BUFFER_SIZE (1<<16)
+
 struct dx_vertex
 {
     float x, y, z, rhw;
@@ -49,7 +51,7 @@ static void DX_Init(HWND hWnd)
     _DX.DX_Device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
     _DX.DX_Device->CreateVertexBuffer(
-        sizeof(dx_vertex) * 4096,
+        sizeof(dx_vertex) * VERTEX_BUFFER_SIZE,
         0,
         D3DFVF_XYZRHW | D3DFVF_DIFFUSE,
         D3DPOOL_MANAGED,
@@ -57,13 +59,13 @@ static void DX_Init(HWND hWnd)
         NULL
     );
 
-    _DX.Vertices = (dx_vertex*)Mem::Alloc(sizeof(dx_vertex) * 4096);
+    _DX.Vertices = (dx_vertex*)Mem::Alloc(sizeof(dx_vertex) * VERTEX_BUFFER_SIZE);
     _DX.VertexCount = 0;
 }
 
 static void DX_Append(dx_vertex *v, usz n)
 {
-    if (_DX.VertexCount + n > 4096)
+    if (_DX.VertexCount + n > VERTEX_BUFFER_SIZE)
     {
         ExitProcess(1);
     }

@@ -7,9 +7,12 @@ namespace PPU
 {
 
 void Init(HWND hWnd);
-void DrawRect(rect r, rgba c);
-void Swap();
 void Shutdown();
+
+void Swap();
+
+void DrawRect(rect r, rgba c);
+void DrawDbgText(const char *Text, v2f Pos, rgba Color);
 
 };
 

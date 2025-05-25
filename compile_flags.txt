@@ -1,1 +1,3 @@
 -ISource
+-m32
+-Wall

@@ -13,13 +13,22 @@ typedef int16_t i16;
 typedef int32_t i32;
 
 typedef float f32;
-typedef double f64;
 
 typedef size_t usz;
 typedef void *any;
 typedef const void *const_any;
 
 typedef uint32_t rgba;
+
+struct v2f
+{
+    f32 X, Y;
+};
+
+struct v2i
+{
+    i32 X, Y;
+};
 
 struct rect
 {

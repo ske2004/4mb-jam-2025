@@ -10,11 +10,6 @@ int _fltused=0; // it should be a single underscore since the double one is the 
 
 static win32_setup GLB_Setup;
 
-static void __BlitToWindow(HWND Window)
-{
-    CallbackFrame(&GLB_Setup);
-}
-
 static void __AdvanceCursor(win32_audio *Audio)
 {
     Audio->Index_Samples++;
@@ -35,13 +30,16 @@ static void __FillBuffer(win32_setup *Setup, DWORD SamplesToWrite)
     DWORD Bytes1, Bytes2;
     if (SUCCEEDED(Audio->SecondaryBuffer->Lock(Cursor_Bytes, Write_Bytes, &Region1, &Bytes1, &Region2, &Bytes2, 0)))
     {
-        for (int i = 0; i < Bytes1/Audio->BytesPerSample; i++)
+        int Count1 = Bytes1/Audio->BytesPerSample,
+            Count2 = Bytes2/Audio->BytesPerSample;
+
+        for (int i = 0; i < Count1; i++)
         {
             audio_sample Sample = CallbackGetSample(Setup);
             ((audio_sample*)Region1)[i] = Sample;
             __AdvanceCursor(Audio);
         }
-        for (int i = 0; i < Bytes2/Audio->BytesPerSample; i++)
+        for (int i = 0; i < Count2; i++)
         {
             audio_sample Sample = CallbackGetSample(Setup);
             ((audio_sample*)Region2)[i] = Sample;
@@ -83,9 +81,9 @@ static DWORD WINAPI __AudioThread(LPVOID Param)
     return 0;
 }
 
-static void __DoFrame(HWND hwnd)
+static void __DoFrame()
 {
-    __BlitToWindow(hwnd);
+    CallbackFrame(&GLB_Setup);
 }
 
 static LRESULT CALLBACK __WndProc(
@@ -99,7 +97,7 @@ static LRESULT CALLBACK __WndProc(
     case WM_TIMER:
         if (wParam == GLB_Setup.FrameTimer)
         {
-            __DoFrame(hWnd);
+            __DoFrame();
         }
         break;
     case WM_CLOSE:

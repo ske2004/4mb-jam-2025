@@ -1,1 +1,1 @@
-For some reason the drawing stops working after I unfocus for a while.
+Fix DirectX context invalidation.

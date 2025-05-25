@@ -3,7 +3,7 @@
 #pragma function(memset)
 void *__cdecl memset(void *dest, int c, size_t n)
 {
-    Mem::Set(dest, c, n);
+    Mem::Set(dest, (u8)c, n);
     return dest;
 }
 
